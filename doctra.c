@@ -18,10 +18,7 @@
  * Return: none
  */
 static void
-print_spn (const char *str,
-	   const size_t start,
-	   const size_t end,
-	   FILE *f)
+print_spn (const char *str, const size_t start, const size_t end, FILE *f)
 {
 	for (size_t i = start; i < end; i++)
 	{
@@ -41,9 +38,7 @@ print_spn (const char *str,
  * Return: none
  */
 static void
-print_spnc (const char *str,
-	    const char *end,
-	    FILE *f)
+print_spnc (const char *str, const char *end, FILE *f)
 {
 	const size_t pos_end = strstr (str, end) - str;
 	
@@ -62,10 +57,7 @@ print_spnc (const char *str,
  * Return: none
  */
 static void
-print_spnc_underline (const char *str,
-		      const char *end,
-		      const char c,
-		      FILE *f)
+print_spnc_underline (const char *str, const char *end, const char c, FILE *f)
 {
 	const size_t pos_end = strstr (str, end) - str;
 	
@@ -82,7 +74,7 @@ print_spnc_underline (const char *str,
 /**
  * parse_file()
  * @filename_src - Filename of the source code.
- * @arg2 - Filename of the documentation.
+ * @filename_doc - Filename of the documentation.
  *
  * Parses a file containing source code and docstrings
  * and writes a documentation in markdown to filename_doc.
@@ -93,14 +85,12 @@ static void
 parse_file (const char *filename_src, const char *filename_doc)
 {
 	FILE *f_src = fopen (filename_src, "r");
-	
 	if (f_src == NULL)
 	{
 		return;
 	}
 	
 	FILE *f_doc = fopen (filename_doc, "w");
-	
 	if (f_doc == NULL)
 	{
 		fclose (f_src);

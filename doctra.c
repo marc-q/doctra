@@ -6,6 +6,17 @@
 #include <stdbool.h>
 #include <string.h>
 
+/**
+ * print_spn()
+ * @str - The content.
+ * @start - Print from.
+ * @end - Print until.
+ * @f - Stream to print on.
+ *
+ * Print's a substring of str into f.
+ *
+ * Return: none
+ */
 static void
 print_spn (const char *str,
 	   const size_t start,
@@ -18,6 +29,17 @@ print_spn (const char *str,
 	}
 }
 
+/**
+ * print_spnc()
+ * @str - The content.
+ * @end - Print until the location of this substring.
+ * @f - Stream to print on.
+ *
+ * Print's a substring of str into f.
+ * Uses a substring to determine the end position.
+ *
+ * Return: none
+ */
 static void
 print_spnc (const char *str,
 	    const char *end,
@@ -28,6 +50,17 @@ print_spnc (const char *str,
 	print_spn (str, 0, pos_end, f);
 }
 
+/**
+ * print_spnc_underline()
+ * @str - The content.
+ * @end - Print until the location of this substring.
+ * @c - Character which will be used to create the underline.
+ * @f - Stream to print on.
+ *
+ * The same a print_spnc, but with an addional underline.
+ *
+ * Return: none
+ */
 static void
 print_spnc_underline (const char *str,
 		      const char *end,
@@ -46,6 +79,16 @@ print_spnc_underline (const char *str,
 	fputc ('\n', f);
 }
 
+/**
+ * parse_file()
+ * @filename_src - Filename of the source code.
+ * @arg2 - Filename of the documentation.
+ *
+ * Parses a file containing source code and docstrings
+ * and writes a documentation in markdown to filename_doc.
+ *
+ * Return: none
+ */
 static void
 parse_file (const char *filename_src, const char *filename_doc)
 {
@@ -137,6 +180,13 @@ parse_file (const char *filename_src, const char *filename_doc)
 int
 main (int argc, char *argv[])
 {
-	parse_file ("test.c", "out.md");
+	if (argc == 3)
+	{
+		parse_file (argv[1], argv[2]);
+	}
+	else
+	{
+		printf ("Usage: %s <filename_src> <filename_out>!\n", argv[0]);
+	}
 	return 0;
 }

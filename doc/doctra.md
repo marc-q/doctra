@@ -51,7 +51,7 @@ parse_file
 **Name** | **Description**
 -------- | ---------------
 filename_src | Filename of the source code.
-arg2 | Filename of the documentation.
+filename_doc | Filename of the documentation.
 Parses a file containing source code and docstrings
 and writes a documentation in markdown to filename_doc.
 

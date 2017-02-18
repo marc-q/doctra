@@ -2,7 +2,6 @@
  * Project: Doctra
  */
 #include <stdio.h>
-#include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
 
@@ -124,12 +123,13 @@ parse_file (const char *filename_src, const char *filename_doc)
 				continue;
 			}
 			
+			// Skip the first two characters
 			cursor += 2;
 			
 			// Argument
 			if (cursor[0] == '@')
 			{
-				// Print the table only once!
+				// Print the table only once per function!
 				if (!argtable)
 				{
 					fputs ("\n**Parameters**\n\n", f_doc);
@@ -154,7 +154,7 @@ parse_file (const char *filename_src, const char *filename_doc)
 				print_spnc (cursor + (strlen ("Return: ")), "\n", f_doc);
 				fputc ('\n', f_doc);
 			}
-			// Function description
+			// Text
 			else
 			{
 				print_spnc (cursor, "\n", f_doc);

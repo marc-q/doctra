@@ -6,7 +6,7 @@ config_init
 **Name** | **Description**
 -------- | ---------------
 self | Pointer to the structure to init.
-Inititilize a config structure.
+Initialize a config structure.
 
 **Returns**
 none
@@ -18,7 +18,7 @@ config_free
 **Name** | **Description**
 -------- | ---------------
 self | Pointer to the structure to free.
-Free's the allocated memmory of a config
+Free's the allocated memory of a config
 structure.
 
 **Returns**

@@ -1,5 +1,5 @@
 CC = gcc
-OBJECTS = doctra.c
+OBJECTS = src/config.c doctra.c
 LIBS =
 CFLAGS = -Wall -Wextra -O2
 BINDIR = $(DESTDIR)/usr/bin

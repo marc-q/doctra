@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
+#include "src/config.h"
 
 /**
  * print_spn()
@@ -12,7 +13,7 @@
  * @end - Print until.
  * @f - Stream to print on.
  *
- * Print's a substring of str into f.
+ * Print's the content of str between start and end into f.
  *
  * Return: none
  */
@@ -51,7 +52,7 @@ print_spnc (const char *str, const char *end, FILE *f)
  * @c - Character which will be used to create the underline.
  * @f - Stream to print on.
  *
- * The same a print_spnc, but with an addional underline.
+ * The same as print_spnc, but with an addional underline.
  *
  * Return: none
  */
@@ -72,6 +73,7 @@ print_spnc_underline (const char *str, const char *end, const char c, FILE *f)
 
 /**
  * parse_file()
+ * @conf - Configuration.
  * @filename_src - Filename of the source code.
  * @filename_doc - Filename of the documentation.
  *
@@ -81,7 +83,7 @@ print_spnc_underline (const char *str, const char *end, const char c, FILE *f)
  * Return: none
  */
 static void
-parse_file (const char *filename_src, const char *filename_doc)
+parse_file (struct doc_config *conf, const char *filename_src, const char *filename_doc)
 {
 	FILE *f_src = fopen (filename_src, "r");
 	if (f_src == NULL)
@@ -101,30 +103,35 @@ parse_file (const char *filename_src, const char *filename_doc)
 	bool mode = false;
 	bool argtable = false;
 	
+	// Some constants
+	const size_t len_block = strlen (conf->pattern[DOC_PATTERN_BLOCK]);
+	const size_t len_return = strlen (conf->pattern[DOC_PATTERN_RETURN]);
+	
 	while (fgets (line, sizeof (line), f_src) != NULL)
 	{	
 		// Enter the documentation mode
-		if (!mode && strstr (line, "/**") != NULL)
+		if (!mode && strstr (line, conf->pattern[DOC_PATTERN_ENTER]) != NULL)
 		{
 			mode = true;
 		}
 		// Exit the documentation mode
-		else if (mode && strstr (line, "*/") != NULL)
+		else if (mode && strstr (line, conf->pattern[DOC_PATTERN_EXIT]) != NULL)
 		{
 			argtable = false;
 			mode = false;
 		}
 		else if (mode)
 		{
-			cursor = strstr (line, "* ");
+			cursor = strstr (line, conf->pattern[DOC_PATTERN_BLOCK]);
 			
+			// Empty line
 			if (cursor == NULL)
 			{
 				continue;
 			}
 			
 			// Skip the first two characters
-			cursor += 2;
+			cursor += len_block;
 			
 			// Argument
 			if (cursor[0] == '@')
@@ -143,15 +150,16 @@ parse_file (const char *filename_src, const char *filename_doc)
 				fputc ('\n', f_doc);
 			}
 			// Function name
-			else if (strstr (cursor, "()") != NULL)
+			else if (strstr (cursor, conf->pattern[DOC_PATTERN_FUNCTION]) != NULL)
 			{
-				print_spnc_underline (cursor, "()", '=', f_doc);
+				print_spnc_underline (cursor, conf->pattern[DOC_PATTERN_FUNCTION], '=', f_doc);
 			}
 			// Return
-			else if (strncmp (cursor, "Return:", strlen ("Return:")) == 0)
+			else if (strncmp (cursor, conf->pattern[DOC_PATTERN_RETURN],
+					  len_block) == 0)
 			{
 				fputs ("\n**Returns**\n", f_doc);
-				print_spnc (cursor + (strlen ("Return: ")), "\n", f_doc);
+				print_spnc (cursor + len_return, "\n", f_doc);
 				fputc ('\n', f_doc);
 			}
 			// Text
@@ -172,7 +180,13 @@ main (int argc, char *argv[])
 {
 	if (argc == 3)
 	{
-		parse_file (argv[1], argv[2]);
+		struct doc_config conf;
+		
+		config_init (&conf);
+		
+		parse_file (&conf, argv[1], argv[2]);
+		
+		config_free (&conf);
 	}
 	else
 	{

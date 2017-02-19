@@ -9,7 +9,7 @@ str | The content.
 start | Print from.
 end | Print until.
 f | Stream to print on.
-Print's a substring of str into f.
+Print's the content of str between start and end into f.
 
 **Returns**
 none
@@ -39,7 +39,7 @@ str | The content.
 end | Print until the location of this substring.
 c | Character which will be used to create the underline.
 f | Stream to print on.
-The same a print_spnc, but with an addional underline.
+The same as print_spnc, but with an addional underline.
 
 **Returns**
 none
@@ -50,6 +50,7 @@ parse_file
 
 **Name** | **Description**
 -------- | ---------------
+conf | Configuration.
 filename_src | Filename of the source code.
 filename_doc | Filename of the documentation.
 Parses a file containing source code and docstrings

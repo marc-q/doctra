@@ -40,9 +40,7 @@ print_spn (const char *str, const size_t start, const size_t end, FILE *f)
 static void
 print_spnc (const char *str, const char *end, FILE *f)
 {
-	const size_t pos_end = strstr (str, end) - str;
-	
-	print_spn (str, 0, pos_end, f);
+	print_spn (str, 0, strstr (str, end) - str, f);
 }
 
 /**
@@ -146,8 +144,7 @@ parse_file (struct doc_config *conf, const char *filename_src, const char *filen
 				}
 				print_spnc (cursor + 1, " -", f_doc);
 				fputs (" | ", f_doc);
-				print_spnc (strstr (cursor, "- ") + 2, "\n", f_doc);
-				fputc ('\n', f_doc);
+				fputs (strstr (cursor, "- ") + 2, f_doc);
 			}
 			// Function name
 			else if (strstr (cursor, conf->pattern[DOC_PATTERN_FUNCTION]) != NULL)
@@ -159,14 +156,12 @@ parse_file (struct doc_config *conf, const char *filename_src, const char *filen
 					  len_block) == 0)
 			{
 				fputs ("\n**Returns**\n", f_doc);
-				print_spnc (cursor + len_return, "\n", f_doc);
-				fputc ('\n', f_doc);
+				fputs (cursor + len_return, f_doc);
 			}
 			// Text
 			else
 			{
-				print_spnc (cursor, "\n", f_doc);
-				fputc ('\n', f_doc);
+				fputs (cursor, f_doc);
 			}
 		}
 	}

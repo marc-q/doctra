@@ -1,5 +1,5 @@
 # Doctra
-Doctra will be a documentation system that i plan to use on my projects.
+Doctra will be a documentation system.
 
 ## How it started
 Like most of my projects, Doctra started as one of my weekend projects.

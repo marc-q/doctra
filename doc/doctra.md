@@ -39,7 +39,7 @@ str | The content.
 end | Print until the location of this substring.
 c | Character which will be used to create the underline.
 f | Stream to print on.
-The same as print_spnc, but with an addional underline.
+The same as print_spnc, but with an additional underline.
 
 **Returns**
 none
@@ -53,7 +53,7 @@ parse_file
 conf | Configuration.
 filename_src | Filename of the source code.
 filename_doc | Filename of the documentation.
-Parses a file containing source code and docstrings
+Parses a file containing source code and doc strings
 and writes a documentation in markdown to filename_doc.
 
 **Returns**

@@ -9,7 +9,7 @@
  * config_init()
  * @self - Pointer to the structure to init.
  *
- * Inititilize a config structure.
+ * Initialize a config structure.
  *
  * Return: none
  */
@@ -28,7 +28,7 @@ config_init (struct doc_config *self)
  * config_free()
  * @self - Pointer to the structure to free.
  *
- * Free's the allocated memmory of a config
+ * Free's the allocated memory of a config
  * structure.
  *
  * Return: none

@@ -52,7 +52,7 @@ print_spnc (const char *str, const char *end, FILE *f)
  * @c - Character which will be used to create the underline.
  * @f - Stream to print on.
  *
- * The same as print_spnc, but with an addional underline.
+ * The same as print_spnc, but with an additional underline.
  *
  * Return: none
  */
@@ -77,7 +77,7 @@ print_spnc_underline (const char *str, const char *end, const char c, FILE *f)
  * @filename_src - Filename of the source code.
  * @filename_doc - Filename of the documentation.
  *
- * Parses a file containing source code and docstrings
+ * Parses a file containing source code and doc strings
  * and writes a documentation in markdown to filename_doc.
  *
  * Return: none

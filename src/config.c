@@ -17,7 +17,7 @@ void
 config_init (struct doc_config *self)
 {
 	// Set the default values
-	self->pattern[DOC_PATTERN_ENTER] = strdup ("/**");
+	self->pattern[DOC_PATTERN_ENTER] = strdup ("/**\n");
 	self->pattern[DOC_PATTERN_EXIT] = strdup ("*/");
 	self->pattern[DOC_PATTERN_BLOCK] = strdup ("* ");
 	self->pattern[DOC_PATTERN_RETURN] = strdup ("Return: ");

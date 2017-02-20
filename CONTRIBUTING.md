@@ -1,4 +1,4 @@
-#Contributing to Atom
+#Contributing to Doctra
 
 :+1: First off, thanks for taking the time to contribute! :+1:
 

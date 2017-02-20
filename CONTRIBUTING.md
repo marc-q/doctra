@@ -4,7 +4,7 @@
 
 ##How To Submit A (Good) Feature Request?
 
-First, check if your feature matches any of the templates underneath. If so, copy the template an fill in the blanks.
+First, check if your request matches any of the templates underneath. If so, copy the template an fill in the blanks.
 
 ###Templates
 New Object:

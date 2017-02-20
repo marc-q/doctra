@@ -5,6 +5,7 @@
 ##How To Submit A (Good) Feature Request?
 
 First, check if your request matches one of the templates underneath. If so, copy the template and fill in the blanks.
+Seccond, make sure to add the **Feature** tag to the issue.
 
 ###Templates
 New Object:

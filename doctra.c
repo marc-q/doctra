@@ -5,7 +5,7 @@
 #include "src/config.h"
 #include "src/object.h"
 #include "src/parser.h"
-#include "src/export_md.h"
+#include "src/exports/export_md.h"
 
 int
 main (int argc, char *argv[])

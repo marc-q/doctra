@@ -17,6 +17,15 @@ TODO:
 - [ ] Implement and document the object.
 - [ ] Implement the export in markdown.
 ```
+New Exporter:
+```
+It would be great to have the ability to export to FORMAT files.
+
+TODO:
+- [ ] Define how the exported page should look.
+- [ ] Implement and document the exporter.
+- [ ] Make sure all objects are supported.
+```
 ##Issue and Pull Request Labels
 
 Label Name | Description

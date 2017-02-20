@@ -13,7 +13,6 @@ main (int argc, char *argv[])
 	if (argc == 3)
 	{
 		struct doc_config conf;
-		
 		config_init (&conf);
 		
 		struct doc_object *objs = NULL;

@@ -6,13 +6,13 @@
 
 /**
  * strlist_insert()
- * @strlist - Stringlist to modify.
- * @str - String to add to the stringlist.
- * @len - Amount of entrys in the stringlist (including this one).
+ * @strlist - String list to modify.
+ * @str - String to add to the string list.
+ * @len - Amount of entries in the string list (including this one).
  *
- * Insert's a entry to a stringlist.
+ * Insert's an entry to a string list.
  *
- * Return: The new address of stringlist;
+ * Return: The new address of strlist.
  */
 char**
 strlist_insert (char **strlist, char *str, const size_t len)
@@ -24,11 +24,11 @@ strlist_insert (char **strlist, char *str, const size_t len)
 
 /**
  * strlist_free()
- * @strlist - Stringlist to free.
- * @items - Amount of items in the strlist.
- * @len - Amount of entry's in the strlist.
+ * @strlist - String list to free.
+ * @items - Amount of items in the string list.
+ * @len - Amount of entry's in the string list.
  *
- * Free's a stringlist if it has entry's.
+ * Free's a string list if it has entry's.
  *
  * Return: none
  */

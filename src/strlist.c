@@ -10,7 +10,7 @@
  * @str - String to add to the string list.
  * @len - Amount of entries in the string list (including this one).
  *
- * Insert's an entry to a string list.
+ * Inserts an entry into a string list.
  *
  * Return: The new address of strlist.
  */
@@ -26,9 +26,9 @@ strlist_insert (char **strlist, char *str, const size_t len)
  * strlist_free()
  * @strlist - String list to free.
  * @items - Amount of items in the string list.
- * @len - Amount of entry's in the string list.
+ * @len - Amount of entries in the string list.
  *
- * Free's a string list if it has entry's.
+ * Frees a string list if it has entries.
  *
  * Return: none
  */

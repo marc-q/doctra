@@ -3,7 +3,7 @@
  */
 #include <stdio.h>
 #include "src/config.h"
-#include "src/object.h"
+#include "src/objects.h"
 #include "src/parser.h"
 #include "src/exports/export_md.h"
 

@@ -3,6 +3,7 @@
  */
 #include <stdlib.h>
 #include <string.h>
+#include "strlist.h"
 #include "object.h"
 
 // DOC_FUNCTION
@@ -44,17 +45,7 @@ function_free (struct doc_function *self)
 	free (self->description);
 	free (self->returns);
 	
-	for (size_t i = 0; i < self->args_amnt; i++)
-	{
-		free (self->args[DOC_ARGS_NAME][i]);
-		free (self->args[DOC_ARGS_DESC][i]);
-	}
-	
-	if (self->args_amnt > 0)
-	{
-		free (self->args[DOC_ARGS_NAME]);
-		free (self->args[DOC_ARGS_DESC]);
-	}
+	strlist_free (self->args, DOC_ARGS_LAST, self->args_amnt);
 }
 
 /**
@@ -70,12 +61,11 @@ function_free (struct doc_function *self)
 void
 function_arg_insert (struct doc_function *self, char *name, char *description)
 {
-	const size_t size = sizeof (char**) * (++self->args_amnt);
-	self->args[DOC_ARGS_NAME] = realloc (self->args[DOC_ARGS_NAME], size);
-	self->args[DOC_ARGS_DESC] = realloc (self->args[DOC_ARGS_DESC], size);
-	
-	self->args[DOC_ARGS_NAME][self->args_amnt - 1] = name;
-	self->args[DOC_ARGS_DESC][self->args_amnt - 1] = description;
+	self->args[DOC_ARGS_NAME] = strlist_insert (self->args[DOC_ARGS_NAME],
+							name, ++self->args_amnt);
+						    
+	self->args[DOC_ARGS_DESC] = strlist_insert (self->args[DOC_ARGS_DESC],
+							description, self->args_amnt); 
 }
 
 // DOC_OBJECT

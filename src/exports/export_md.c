@@ -3,7 +3,7 @@
  */
 #include <stdio.h>
 #include <string.h>
-#include "../object.h"
+#include "../objects.h"
 #include "export_md.h"
 
 /**
@@ -41,9 +41,9 @@ export_md_function (struct doc_function *self, FILE *f_doc)
 	
 	for (size_t i = 0; i < self->args_amnt; i++)
 	{
-		fputs (self->args[DOC_ARGS_NAME][i], f_doc);
+		fputs (self->args[FUNCTION_ARGS_NAME][i], f_doc);
 		fputs (" | ", f_doc);
-		fputs (self->args[DOC_ARGS_DESC][i], f_doc);
+		fputs (self->args[FUNCTION_ARGS_DESC][i], f_doc);
 	}
 	
 	// Returns

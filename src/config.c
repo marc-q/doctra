@@ -20,6 +20,9 @@ config_init (struct doc_config *self)
 	self->pattern[DOC_PATTERN_ENTER] = strdup ("/**\n");
 	self->pattern[DOC_PATTERN_EXIT] = strdup ("*/\n");
 	self->pattern[DOC_PATTERN_BLOCK] = strdup ("* ");
+	
+	self->len_return = strlen (DOC_PATTERN_RETURN);
+	self->len_mdelim = strlen (DOC_PATTERN_MDELIM);
 }
 
 /**

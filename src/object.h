@@ -8,7 +8,8 @@ union doc_element
 
 enum element_type
 {
-	DOC_ELEMENT_FUNCTION = 0
+	DOC_ELEMENT_NONE = 0,
+	DOC_ELEMENT_FUNCTION
 };
 
 struct doc_object

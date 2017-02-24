@@ -13,6 +13,22 @@ end | Ending sequence.
 **Returns**
 a new allocated substring of @str that ends at @end.
 
+parse_function
+==============
+Parses fields of a function object.
+
+
+**Parameters**
+
+**Name** | **Description**
+-------- | ---------------
+conf | The configuration.
+func | Function object.
+cursor | String to parse.
+
+**Returns**
+none
+
 parse_file
 ==========
 Parses a source file and returns a doc_object linked list

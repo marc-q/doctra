@@ -69,7 +69,7 @@ parse_function (const struct doc_config *conf, struct doc_function *func, const 
  * Return: A linked list containing the information.
  */
 struct doc_object*
-parse_file (struct doc_config *conf, struct doc_object *objs, const char *filename)
+parse_file (const struct doc_config *conf, struct doc_object *objs, const char *filename)
 {
 	FILE *f_src = fopen (filename, "r");
 	if (f_src == NULL)

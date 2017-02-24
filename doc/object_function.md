@@ -1,3 +1,20 @@
+doc_function
+
+=============
+Represents a function.
+
+
+**Members**
+
+**Name** | **Description**
+-------- | ---------------
+args_amnt | Amount of arguments.
+name | Name of the function.
+description | Description of the function.
+returns | Description of what the function returns.
+args | A string list holding the arguments.
+
+
 function_init
 =============
 Initialize's a doc_function structure.
@@ -42,3 +59,4 @@ description | Description of the argument.
 
 **Returns**
 none
+

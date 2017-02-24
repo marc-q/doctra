@@ -4,14 +4,24 @@
 union doc_element
 {
 	struct doc_function func;
+	struct doc_struct struc;
 };
 
 enum element_type
 {
 	DOC_ELEMENT_NONE = 0,
-	DOC_ELEMENT_FUNCTION
+	DOC_ELEMENT_FUNCTION,
+	DOC_ELEMENT_STRUCT
 };
 
+/**
+ * struct doc_object
+ * @type - Type of the object.
+ * @element - Data of the object.
+ * @next - Address of the next entry.
+ *
+ * A linked list of objects.
+ */
 struct doc_object
 {
 	enum element_type type;

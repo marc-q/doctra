@@ -58,6 +58,63 @@ parse_function (const struct doc_config *conf, struct doc_function *func, const 
 }
 
 /**
+ * parse_struct()
+ * @conf - The configuration.
+ * @struc - Struct object.
+ * @cursor - String to parse.
+ *
+ * Parses fields of a struct object.
+ *
+ * Return: none
+ */
+static void
+parse_struct (const struct doc_config *conf, struct doc_struct *struc, const char *cursor)
+{
+	// Member
+	if (cursor[0] == DOC_PATTERN_MEMBER)
+	{
+		struct_member_insert (struc, strspn_c (cursor + 1, DOC_PATTERN_MDELIM),
+					strdup (strstr (cursor, DOC_PATTERN_MDELIM) + conf->len_mdelim));
+	}
+	// Description
+	else
+	{
+		struc->description = realloc (struc->description,
+			(strlen (struc->description) + strlen (cursor) + 1) * sizeof (char));
+		strcat (struc->description, cursor);
+	}
+}
+
+/**
+ * parse_object()
+ * @conf - The configuration.
+ * @fields - Element object.
+ * @type - The object type will be stored here.
+ * @cursor - String to parse.
+ *
+ * Parses a object type and initialize it.
+ *
+ * Return: none
+ */
+static void
+parse_object (const struct doc_config *conf, union doc_element *fields, enum element_type *type, const char *cursor)
+{
+	// Function name
+	if (strstr (cursor, DOC_PATTERN_FUNCTION) != NULL)
+	{
+		*type = DOC_ELEMENT_FUNCTION;
+		function_init (&fields->func,
+				strspn_c (cursor, DOC_PATTERN_FUNCTION));
+	}
+	// Struct name
+	else if (strncmp (cursor, DOC_PATTERN_STRUCT, conf->len_struct) == 0)
+	{
+		*type = DOC_ELEMENT_STRUCT;
+		struct_init (&fields->struc, strdup (&cursor[conf->len_struct]));
+	}
+}
+
+/**
  * parse_file()
  * @conf - The configuration.
  * @objs - The list head.
@@ -117,20 +174,17 @@ parse_file (const struct doc_config *conf, struct doc_object *objs, const char *
 			// Skip the first two characters
 			cursor += len_block;
 			
-			// Function name
-			if (strstr (cursor, DOC_PATTERN_FUNCTION) != NULL)
-			{
-				type = DOC_ELEMENT_FUNCTION;
-				function_init (&fields.func,
-						strspn_c (cursor, DOC_PATTERN_FUNCTION));
-				continue;
-			}
-			
 			// Parse the object
 			switch (type)
 			{
+				case DOC_ELEMENT_NONE:
+					parse_object (conf, &fields, &type, cursor);
+					break;
 				case DOC_ELEMENT_FUNCTION:
 					parse_function (conf, &fields.func, cursor);
+					break;
+				case DOC_ELEMENT_STRUCT:
+					parse_struct (conf, &fields.struc, cursor);
 					break;
 				default:
 					break;

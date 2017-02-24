@@ -59,6 +59,9 @@ object_free (struct doc_object *list)
 			case DOC_ELEMENT_FUNCTION:
 				function_free (&list->element.func);
 				break;
+			case DOC_ELEMENT_STRUCT:
+				struct_free (&list->element.struc);
+				break;
 			default:
 				break;
 		}

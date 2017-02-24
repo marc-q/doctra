@@ -23,6 +23,7 @@ config_init (struct doc_config *self)
 	
 	self->len_return = strlen (DOC_PATTERN_RETURN);
 	self->len_mdelim = strlen (DOC_PATTERN_MDELIM);
+	self->len_struct = strlen (DOC_PATTERN_STRUCT);
 }
 
 /**

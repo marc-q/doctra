@@ -25,6 +25,39 @@ strspn_c (const char *str, const char *end)
 }
 
 /**
+ * parse_function()
+ * @conf - The configuration.
+ * @func - Function object.
+ * @cursor - String to parse.
+ *
+ * Parses fields of a function object.
+ *
+ * Return: none
+ */
+static void
+parse_function (const struct doc_config *conf, struct doc_function *func, const char *cursor)
+{
+	// Argument
+	if (cursor[0] == DOC_PATTERN_MEMBER)
+	{
+		function_arg_insert (func, strspn_c (cursor + 1, DOC_PATTERN_MDELIM),
+					strdup (strstr (cursor, DOC_PATTERN_MDELIM) + conf->len_mdelim));
+	}
+	// Return
+	else if (strncmp (cursor, DOC_PATTERN_RETURN, conf->len_return) == 0)
+	{	
+		func->returns = strdup (cursor + conf->len_return);
+	}
+	// Description
+	else
+	{
+		func->description = realloc (func->description,
+			(strlen (func->description) + strlen (cursor) + 1) * sizeof (char));
+		strcat (func->description, cursor);
+	}
+}
+
+/**
  * parse_file()
  * @conf - The configuration.
  * @objs - The list head.
@@ -48,7 +81,7 @@ parse_file (struct doc_config *conf, struct doc_object *objs, const char *filena
 	const char *cursor;
 	bool mode = false;
 	
-	enum element_type type;
+	enum element_type type = DOC_ELEMENT_NONE;
 	union doc_element fields;
 	
 	// Some constants
@@ -59,7 +92,7 @@ parse_file (struct doc_config *conf, struct doc_object *objs, const char *filena
 		// Enter the documentation mode
 		if (!mode && strstr (line, conf->pattern[DOC_PATTERN_ENTER]) != NULL)
 		{
-			type = DOC_ELEMENT_FUNCTION;
+			type = DOC_ELEMENT_NONE;
 			mode = true;
 		}
 		// Exit the documentation mode
@@ -81,29 +114,23 @@ parse_file (struct doc_config *conf, struct doc_object *objs, const char *filena
 			// Skip the first two characters
 			cursor += len_block;
 			
-			// Argument
-			if (cursor[0] == DOC_PATTERN_MEMBER)
-			{
-				function_arg_insert (&fields.func,
-							strspn_c (cursor + 1, DOC_PATTERN_MDELIM),
-							strdup (strstr (cursor, DOC_PATTERN_MDELIM) + conf->len_mdelim));
-			}
 			// Function name
-			else if (strstr (cursor, DOC_PATTERN_FUNCTION) != NULL)
+			if (strstr (cursor, DOC_PATTERN_FUNCTION) != NULL)
 			{
+				type = DOC_ELEMENT_FUNCTION;
 				function_init (&fields.func,
 						strspn_c (cursor, DOC_PATTERN_FUNCTION));
+				continue;
 			}
-			// Return
-			else if (strncmp (cursor, DOC_PATTERN_RETURN, conf->len_return) == 0)
-			{	
-				fields.func.returns = strdup (cursor + conf->len_return);
-			}
-			// Function description
-			else
+			
+			// Parse the object
+			switch (type)
 			{
-				fields.func.description = realloc (fields.func.description, (strlen (fields.func.description) + strlen (cursor) + 1) * sizeof (char));
-				strcat (fields.func.description, cursor);
+				case DOC_ELEMENT_FUNCTION:
+					parse_function (conf, &fields.func, cursor);
+					break;
+				default:
+					break;
 			}
 		}
 	}

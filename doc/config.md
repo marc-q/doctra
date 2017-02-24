@@ -1,5 +1,4 @@
 doc_config
-
 ===========
 Holds the configuration.
 

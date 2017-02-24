@@ -1,5 +1,4 @@
 doc_struct
-
 ===========
 Represents a struct.
 

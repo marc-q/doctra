@@ -1,5 +1,4 @@
 doc_object
-
 ===========
 A linked list of objects.
 

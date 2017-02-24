@@ -98,7 +98,10 @@ parse_file (struct doc_config *conf, struct doc_object *objs, const char *filena
 		// Exit the documentation mode
 		else if (mode && strstr (line, conf->pattern[DOC_PATTERN_EXIT]) != NULL)
 		{
-			objs = object_append (objs, type, &fields);
+			if (type != DOC_ELEMENT_NONE)
+			{
+				objs = object_append (objs, type, &fields);
+			}
 			mode = false;
 		}
 		else if (mode)

@@ -1,14 +1,17 @@
 #ifndef __DOCTRA_CONFIG_H__
 #define __DOCTRA_CONFIG_H__
 
+// Not customizable once are defined here:
+#define DOC_PATTERN_RETURN "Return: "
+#define DOC_PATTERN_FUNCTION "()\n"
+#define DOC_PATTERN_MEMBER '@'
+
+// Customizable once are define here:
 enum doc_pattern
 {
-
 	DOC_PATTERN_ENTER = 0,
 	DOC_PATTERN_EXIT,
 	DOC_PATTERN_BLOCK,
-	DOC_PATTERN_RETURN,
-	DOC_PATTERN_FUNCTION,
 	DOC_PATTERN_LAST
 };
 

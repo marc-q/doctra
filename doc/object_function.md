@@ -1,5 +1,4 @@
 doc_function
-
 =============
 Represents a function.
 

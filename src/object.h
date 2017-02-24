@@ -14,7 +14,7 @@ enum element_type
 
 struct doc_object
 {
-	int type;
+	enum element_type type;
 	union doc_element element;
 	struct doc_object *next;
 };

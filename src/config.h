@@ -5,6 +5,7 @@
 #define DOC_PATTERN_RETURN "Return: "
 #define DOC_PATTERN_FUNCTION "()\n"
 #define DOC_PATTERN_MEMBER '@'
+#define DOC_PATTERN_MDELIM " - "
 
 // Customizable once are define here:
 enum doc_pattern
@@ -17,6 +18,8 @@ enum doc_pattern
 
 struct doc_config
 {
+	size_t len_return;
+	size_t len_mdelim;
 	char *pattern[DOC_PATTERN_LAST];
 };
 

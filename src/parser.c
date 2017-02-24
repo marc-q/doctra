@@ -53,7 +53,7 @@ parse_file (struct doc_config *conf, struct doc_object *objs, const char *filena
 	
 	// Some constants
 	const size_t len_block = strlen (conf->pattern[DOC_PATTERN_BLOCK]);
-	const size_t len_return = strlen (conf->pattern[DOC_PATTERN_RETURN]);
+	const size_t len_return = strlen (DOC_PATTERN_RETURN);
 	
 	while (fgets (line, sizeof (line), f_src) != NULL)
 	{	
@@ -83,19 +83,19 @@ parse_file (struct doc_config *conf, struct doc_object *objs, const char *filena
 			cursor += len_block;
 			
 			// Argument
-			if (cursor[0] == '@')
+			if (cursor[0] == DOC_PATTERN_MEMBER)
 			{
 				function_arg_insert (&fields.func, strspn_c (cursor + 1, " -"),
 						     strdup (strstr (cursor, "- ") + 2));
 			}
 			// Function name
-			else if (strstr (cursor, conf->pattern[DOC_PATTERN_FUNCTION]) != NULL)
+			else if (strstr (cursor, DOC_PATTERN_FUNCTION) != NULL)
 			{
-				function_init (&fields.func, strspn_c (cursor, conf->pattern[DOC_PATTERN_FUNCTION]));
+				function_init (&fields.func,
+						strspn_c (cursor, DOC_PATTERN_FUNCTION));
 			}
 			// Return
-			else if (strncmp (cursor, conf->pattern[DOC_PATTERN_RETURN],
-					  len_block) == 0)
+			else if (strncmp (cursor, DOC_PATTERN_RETURN, len_return) == 0)
 			{	
 				fields.func.returns = strdup (cursor + len_return);
 			}

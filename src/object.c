@@ -54,7 +54,14 @@ object_free (struct doc_object *list)
 	{
 		next = list->next;
 		
-		function_free (&list->element.func);
+		switch (list->type)
+		{
+			case DOC_ELEMENT_FUNCTION:
+				function_free (&list->element.func);
+				break;
+			default:
+				break;
+		}
 		
 		free (list);
 		list = next;

@@ -67,7 +67,6 @@ export_md_struct (struct doc_struct *self, FILE *f_doc)
 {
 	// Name
 	fputs (self->name, f_doc);
-	fputs ("\n", f_doc);
 	
 	// Underline
 	for (size_t i = 0; i < strlen (self->name); i++)

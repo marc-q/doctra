@@ -2,131 +2,82 @@
  * Project: Doctra
  */
 #include <stdio.h>
-#include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
+#include "string_utils.h"
 #include "config.h"
-#include "objects.h"
+#include "object.h"
+#include "node.h"
 #include "parser.h"
 
 /**
- * strspn_c()
- * @str - String.
- * @end - Ending sequence.
- *
- * A simple shortcut.
- *
- * Return: a new allocated substring of @str that ends at @end.
- */
-static char*
-strspn_c (const char *str, const char *end)
-{
-	return strndup (str, (size_t) (strstr (str, end) - str));
-}
-
-/**
- * parse_function()
- * @conf - The configuration.
- * @func - Function object.
+ * parse_object()
+ * @self - The object to insert the data.
  * @cursor - String to parse.
  *
- * Parses fields of a function object.
+ * Parses fields of a doc_object.
  *
  * Return: none
  */
 static void
-parse_function (const struct doc_config *conf, struct doc_function *func, const char *cursor)
-{
-	// Argument
-	if (cursor[0] == DOC_PATTERN_MEMBER)
-	{
-		function_arg_insert (func, strspn_c (cursor + 1, DOC_PATTERN_MDELIM),
-					strdup (strstr (cursor, DOC_PATTERN_MDELIM) + conf->len_mdelim));
-	}
-	// Return
-	else if (strncmp (cursor, DOC_PATTERN_RETURN, conf->len_return) == 0)
-	{	
-		func->returns = strdup (cursor + conf->len_return);
-	}
-	// Description
-	else
-	{
-		func->description = realloc (func->description,
-			(strlen (func->description) + strlen (cursor) + 1) * sizeof (char));
-		strcat (func->description, cursor);
-	}
-}
-
-/**
- * parse_struct()
- * @conf - The configuration.
- * @struc - Struct object.
- * @cursor - String to parse.
- *
- * Parses fields of a struct object.
- *
- * Return: none
- */
-static void
-parse_struct (const struct doc_config *conf, struct doc_struct *struc, const char *cursor)
+parse_object (struct doc_object *self, const char *cursor)
 {
 	// Member
-	if (cursor[0] == DOC_PATTERN_MEMBER)
+	if (string_match_start (cursor, DOC_PATTERN_MEMBER))
 	{
-		struct_member_insert (struc, strspn_c (cursor + 1, DOC_PATTERN_MDELIM),
-					strdup (strstr (cursor, DOC_PATTERN_MDELIM) + conf->len_mdelim));
+		object_member_insert (self, strspan_c (&cursor[1], DOC_PATTERN_MDELIM),
+					strspan (cursor, DOC_PATTERN_MDELIM, "\n"));
+	}
+	// Return
+	else if (string_match_start (cursor, DOC_PATTERN_RETURN))
+	{	
+		self->returns = strspan_c (&cursor[strlen (DOC_PATTERN_RETURN)], "\n");
 	}
 	// Description
 	else
 	{
-		struc->description = realloc (struc->description,
-			(strlen (struc->description) + strlen (cursor) + 1) * sizeof (char));
-		strcat (struc->description, cursor);
+		self->description = string_recat (self->description, cursor);
 	}
 }
 
 /**
- * parse_object()
- * @conf - The configuration.
- * @fields - Element object.
- * @type - The object type will be stored here.
+ * parse_node()
+ * @node - Node to store the object in.
  * @cursor - String to parse.
  *
- * Parses a object type and initialize it.
+ * Parses a node type and initialize it.
  *
  * Return: none
  */
 static void
-parse_object (const struct doc_config *conf, union doc_element *fields, enum element_type *type, const char *cursor)
+parse_node (struct doc_node *node, const char *cursor)
 {
 	// Function name
-	if (strstr (cursor, DOC_PATTERN_FUNCTION) != NULL)
+	if (string_match_end (cursor, DOC_PATTERN_FUNCTION))
 	{
-		*type = DOC_ELEMENT_FUNCTION;
-		function_init (&fields->func,
-				strspn_c (cursor, DOC_PATTERN_FUNCTION));
+		node_init (node, DOC_NODE_FUNCTION, strspan_c (cursor, DOC_PATTERN_FUNCTION));
 	}
 	// Struct name
-	else if (strncmp (cursor, DOC_PATTERN_STRUCT, conf->len_struct) == 0)
+	else if (string_match_start (cursor, DOC_PATTERN_STRUCT))
 	{
-		*type = DOC_ELEMENT_STRUCT;
-		struct_init (&fields->struc, strdup (&cursor[conf->len_struct]));
+		node_init (node, DOC_NODE_STRUCT,
+				strspan_c (&cursor[strlen (DOC_PATTERN_STRUCT)], "\n"));
 	}
 }
 
 /**
  * parse_file()
  * @conf - The configuration.
- * @objs - The list head.
+ * @nodes - The list head.
  * @filename - Name of the source file.
  *
- * Parses a source file and returns a doc_object linked list
+ * Parses a source file and returns a doc_node linked list
  * which contains the information gathered from the source file.
  *
  * Return: A linked list containing the information.
  */
-struct doc_object*
-parse_file (const struct doc_config *conf, struct doc_object *objs, const char *filename)
+struct doc_node*
+parse_file (const struct doc_config *conf, struct doc_node *nodes, const char *filename)
 {
 	FILE *f_src = fopen (filename, "r");
 	if (f_src == NULL)
@@ -138,8 +89,7 @@ parse_file (const struct doc_config *conf, struct doc_object *objs, const char *
 	const char *cursor;
 	bool mode = false;
 	
-	enum element_type type = DOC_ELEMENT_NONE;
-	union doc_element fields;
+	struct doc_node node;
 	
 	// Some constants
 	const size_t len_block = strlen (conf->pattern[DOC_PATTERN_BLOCK]);
@@ -149,15 +99,15 @@ parse_file (const struct doc_config *conf, struct doc_object *objs, const char *
 		// Enter the documentation mode
 		if (!mode && strstr (line, conf->pattern[DOC_PATTERN_ENTER]) != NULL)
 		{
-			type = DOC_ELEMENT_NONE;
+			node.type = DOC_NODE_NONE;
 			mode = true;
 		}
 		// Exit the documentation mode
 		else if (mode && strstr (line, conf->pattern[DOC_PATTERN_EXIT]) != NULL)
 		{
-			if (type != DOC_ELEMENT_NONE)
+			if (node.type != DOC_NODE_NONE)
 			{
-				objs = object_append (objs, type, &fields);
+				nodes = node_append (nodes, &node);
 			}
 			mode = false;
 		}
@@ -174,24 +124,19 @@ parse_file (const struct doc_config *conf, struct doc_object *objs, const char *
 			// Skip the first two characters
 			cursor += len_block;
 			
-			// Parse the object
-			switch (type)
+			// Try parsing the node
+			if (node.type == DOC_NODE_NONE)
 			{
-				case DOC_ELEMENT_NONE:
-					parse_object (conf, &fields, &type, cursor);
-					break;
-				case DOC_ELEMENT_FUNCTION:
-					parse_function (conf, &fields.func, cursor);
-					break;
-				case DOC_ELEMENT_STRUCT:
-					parse_struct (conf, &fields.struc, cursor);
-					break;
-				default:
-					break;
+				parse_node (&node, cursor);
+			}
+			// Parse the object
+			else
+			{
+				parse_object (&node.element, cursor);
 			}
 		}
 	}
 	
 	fclose (f_src);
-	return objs;
+	return nodes;
 }

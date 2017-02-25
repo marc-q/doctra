@@ -12,7 +12,7 @@
  *
  * Inserts an entry into a string list.
  *
- * Return: The new address of strlist.
+ * Return: The new address of @strlist.
  */
 char**
 strlist_insert (char **strlist, char *str, const size_t len)

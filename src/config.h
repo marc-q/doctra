@@ -4,7 +4,7 @@
 // Not customizable once are defined here:
 #define DOC_PATTERN_RETURN "Return: "
 #define DOC_PATTERN_FUNCTION "()\n"
-#define DOC_PATTERN_MEMBER '@'
+#define DOC_PATTERN_MEMBER "@"
 #define DOC_PATTERN_MDELIM " - "
 #define DOC_PATTERN_STRUCT "struct "
 
@@ -19,18 +19,12 @@ enum doc_pattern
 
 /**
  * struct doc_config
- * @len_return - Length of the return pattern.
- * @len_mdelim - Length of the mdelim pattern.
- * @len_struct - Length of the struct pattern.
  * @pattern - Customizable patterns.
  *
  * Holds the configuration.
  */
 struct doc_config
 {
-	size_t len_return;
-	size_t len_mdelim;
-	size_t len_struct;
 	char *pattern[DOC_PATTERN_LAST];
 };
 

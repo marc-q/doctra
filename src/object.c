@@ -2,71 +2,70 @@
  * Project: Doctra
  */
 #include <stdlib.h>
+#include <string.h>
 #include "strlist.h"
-#include "objects.h"
+#include "object.h"
 
 /**
- * object_append()
- * @list - List head.
- * @type - The type of the element.
- * @element - The element.
+ * object_init()
+ * @self - The structure itself.
  *
- * Append's an entry to the linked list.
- *
- * Return: Pointer to the list head.
- */
-struct doc_object*
-object_append (struct doc_object *list, const enum element_type type, const union doc_element *element)
-{
-	struct doc_object *new = malloc (sizeof (struct doc_object));
-	
-	new->type = type;
-	new->element = *element;
-	new->next = NULL;
-	
-	if (list)
-	{
-		struct doc_object *last = list;
-		while (last->next)
-		{
-			last = last->next;
-		}
-		last->next = new;
-		return list;
-	}
-	return new;
-}
-
-/**
- * object_free()
- * @list - List head.
- *
- * Free's the whole linked list.
+ * Initialize's a doc_object structure.
  *
  * Return: none
  */
 void
-object_free (struct doc_object *list)
+object_init (struct doc_object *self)
 {
-	struct doc_object *next;
+	self->description = strdup ("");
+	self->returns = NULL;
 	
-	while (list)
+	// Members
+	self->members_amnt = 0;
+	self->members[OBJ_MEMBERS_NAME] = NULL;
+	self->members[OBJ_MEMBERS_DESC] = NULL;
+}
+
+/**
+ * object_free()
+ * @self - The structure itself.
+ *
+ * Free's the allocated memory of a doc_object structure.
+ *
+ * Return: none
+ */
+void
+object_free (struct doc_object *self)
+{
+	free (self->description);
+	
+	if (self->returns != NULL)
 	{
-		next = list->next;
-		
-		switch (list->type)
-		{
-			case DOC_ELEMENT_FUNCTION:
-				function_free (&list->element.func);
-				break;
-			case DOC_ELEMENT_STRUCT:
-				struct_free (&list->element.struc);
-				break;
-			default:
-				break;
-		}
-		
-		free (list);
-		list = next;
+		free (self->returns);
 	}
+	
+	if (self->members_amnt != 0)
+	{
+		strlist_free (self->members, OBJ_MEMBERS_LAST, self->members_amnt);
+	}
+}
+
+/**
+ * object_member_insert()
+ * @self - The structure itself.
+ * @name - Name of the member.
+ * @description - Description of the member.
+ *
+ * Insert a new member to the doc_object.
+ *
+ * Return: none
+ */
+void
+object_member_insert (struct doc_object *self, char *name, char *description)
+{
+	self->members[OBJ_MEMBERS_NAME] = strlist_insert (self->members[OBJ_MEMBERS_NAME],
+								name, ++self->members_amnt);
+						    
+	self->members[OBJ_MEMBERS_DESC] = strlist_insert (self->members[OBJ_MEMBERS_DESC],
+								description, self->members_amnt); 
 }

@@ -1,36 +1,34 @@
 #ifndef __DOCTRA_OBJECT_H__
 #define __DOCTRA_OBJECT_H__
 
-union doc_element
+enum object_members
 {
-	struct doc_function func;
-	struct doc_struct struc;
-};
-
-enum element_type
-{
-	DOC_ELEMENT_NONE = 0,
-	DOC_ELEMENT_FUNCTION,
-	DOC_ELEMENT_STRUCT
+	OBJ_MEMBERS_NAME = 0,
+	OBJ_MEMBERS_DESC,
+	OBJ_MEMBERS_LAST
 };
 
 /**
  * struct doc_object
- * @type - Type of the object.
- * @element - Data of the object.
- * @next - Address of the next entry.
+ * @members_amnt - Amount of entries in the string list.
+ * @description - Description of the object.
+ * @returns - Description of what the object returns.
+ * @members - String list storing the members.
  *
- * A linked list of objects.
+ * Stores the documentation informations.
  */
 struct doc_object
 {
-	enum element_type type;
-	union doc_element element;
-	struct doc_object *next;
+	size_t members_amnt;
+	char *description;
+	char *returns;
+	char **members[OBJ_MEMBERS_LAST];
 };
 
-struct doc_object* object_append (struct doc_object*, const enum element_type, const union doc_element*);
-
+void object_init (struct doc_object*);
 void object_free (struct doc_object*);
 
+void object_member_insert (struct doc_object*, char*, char*);
+
 #endif /* __DOCTRA_OBJECT_H__ */
+

@@ -1,10 +1,25 @@
 
 
+export_md_underline
+===================
+Writes @str with a underline made of @fill
+to the @f_doc stream.
+
+**Parameters**
+
+**Name** | **Description**
+-------- | ---------------
+str | String to output with an underline.
+fill | String to output as underline.
+f_doc | Stream to which the output gets written.
+
+**Returns**
+none
+
 export_md_function
 ==================
 Exports a function object to the file @f_doc
 in Markdown.
-
 
 **Parameters**
 
@@ -21,7 +36,6 @@ export_md_struct
 Exports a struct object to the file @f_doc
 in Markdown.
 
-
 **Parameters**
 
 **Name** | **Description**
@@ -34,14 +48,13 @@ none
 
 export_md
 =========
-Exports the objects in Markdown to a file named @filename.
-
+Exports the @nodes in Markdown to a file named @filename.
 
 **Parameters**
 
 **Name** | **Description**
 -------- | ---------------
-objs | The list head.
+nodes | The list head.
 filename | The name of the documentation file.
 
 **Returns**

@@ -1,64 +1,28 @@
 
 
-strspn_c
-========
-A simple shortcut.
-
-
-**Parameters**
-
-**Name** | **Description**
--------- | ---------------
-str | String.
-end | Ending sequence.
-
-**Returns**
-a new allocated substring of @str that ends at @end.
-
-parse_function
-==============
-Parses fields of a function object.
-
-
-**Parameters**
-
-**Name** | **Description**
--------- | ---------------
-conf | The configuration.
-func | Function object.
-cursor | String to parse.
-
-**Returns**
-none
-
-parse_struct
-============
-Parses fields of a struct object.
-
-
-**Parameters**
-
-**Name** | **Description**
--------- | ---------------
-conf | The configuration.
-struc | Struct object.
-cursor | String to parse.
-
-**Returns**
-none
-
 parse_object
 ============
-Parses a object type and initialize it.
-
+Parses fields of a doc_object.
 
 **Parameters**
 
 **Name** | **Description**
 -------- | ---------------
-conf | The configuration.
-fields | Element object.
-type | The object type will be stored here.
+self | The object to insert the data.
+cursor | String to parse.
+
+**Returns**
+none
+
+parse_node
+==========
+Parses a node type and initialize it.
+
+**Parameters**
+
+**Name** | **Description**
+-------- | ---------------
+node | Node to store the object in.
 cursor | String to parse.
 
 **Returns**
@@ -66,16 +30,15 @@ none
 
 parse_file
 ==========
-Parses a source file and returns a doc_object linked list
+Parses a source file and returns a doc_node linked list
 which contains the information gathered from the source file.
-
 
 **Parameters**
 
 **Name** | **Description**
 -------- | ---------------
 conf | The configuration.
-objs | The list head.
+nodes | The list head.
 filename | Name of the source file.
 
 **Returns**

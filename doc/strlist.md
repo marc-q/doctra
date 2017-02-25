@@ -4,7 +4,6 @@ strlist_insert
 ==============
 Inserts an entry into a string list.
 
-
 **Parameters**
 
 **Name** | **Description**
@@ -14,12 +13,11 @@ str | String to add to the string list.
 len | Amount of entries in the string list (including this one).
 
 **Returns**
-The new address of strlist.
+The new address of @strlist.
 
 strlist_free
 ============
 Frees a string list if it has entries.
-
 
 **Parameters**
 

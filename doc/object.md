@@ -1,43 +1,54 @@
 doc_object
-===========
-A linked list of objects.
-
+==========
+Stores the documentation informations.
 
 **Members**
 
 **Name** | **Description**
 -------- | ---------------
-type | Type of the object.
-element | Data of the object.
-next | Address of the next entry.
+members_amnt | Amount of entries in the string list.
+description | Description of the object.
+returns | Description of what the object returns.
+members | String list storing the members.
 
 
-object_append
-=============
-Append's an entry to the linked list.
-
+object_init
+===========
+Initialize's a doc_object structure.
 
 **Parameters**
 
 **Name** | **Description**
 -------- | ---------------
-list | List head.
-type | The type of the element.
-element | The element.
+self | The structure itself.
 
 **Returns**
-Pointer to the list head.
+none
 
 object_free
 ===========
-Free's the whole linked list.
-
+Free's the allocated memory of a doc_object structure.
 
 **Parameters**
 
 **Name** | **Description**
 -------- | ---------------
-list | List head.
+self | The structure itself.
+
+**Returns**
+none
+
+object_member_insert
+====================
+Insert a new member to the doc_object.
+
+**Parameters**
+
+**Name** | **Description**
+-------- | ---------------
+self | The structure itself.
+name | Name of the member.
+description | Description of the member.
 
 **Returns**
 none

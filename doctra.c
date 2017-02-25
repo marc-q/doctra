@@ -3,7 +3,8 @@
  */
 #include <stdio.h>
 #include "src/config.h"
-#include "src/objects.h"
+#include "src/object.h"
+#include "src/node.h"
 #include "src/parser.h"
 #include "src/exports/export_md.h"
 
@@ -15,13 +16,13 @@ main (int argc, char *argv[])
 		struct doc_config conf;
 		config_init (&conf);
 		
-		struct doc_object *objs = NULL;
-		objs = parse_file (&conf, objs, argv[1]);
+		struct doc_node *nodes = NULL;
+		nodes = parse_file (&conf, nodes, argv[1]);
 		
-		export_md (objs, argv[2]);
+		export_md (nodes, argv[2]);
 		
 		config_free (&conf);
-		object_free (objs);
+		node_free (nodes);
 	}
 	else
 	{

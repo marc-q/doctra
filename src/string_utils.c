@@ -58,6 +58,12 @@ string_match_end (const char *str, const char *pat)
 char*
 string_recat (char *dest, const char *src)
 {
+	// Check if the string is empty
+	if (dest == NULL)
+	{
+		return strdup (src);
+	}
+	
 	dest = realloc (dest, (strlen (dest) + strlen (src) + 1) * sizeof (char));
 	strcat (dest, src);
 	return dest;

@@ -17,7 +17,7 @@
 void
 object_init (struct doc_object *self)
 {
-	self->description = strdup ("");
+	self->description = NULL;
 	self->returns = NULL;
 	
 	// Members
@@ -37,7 +37,10 @@ object_init (struct doc_object *self)
 void
 object_free (struct doc_object *self)
 {
-	free (self->description);
+	if (self->description != NULL)
+	{
+		free (self->description);
+	}
 	
 	if (self->returns != NULL)
 	{

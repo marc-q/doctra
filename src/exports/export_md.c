@@ -48,7 +48,10 @@ static void
 export_md_function (struct doc_object *self, FILE *f_doc)
 {	
 	// Description
-	fputs (self->description, f_doc);
+	if (self->description != NULL)
+	{ 
+		fputs (self->description, f_doc);
+	}
 	
 	// Parameters
 	fputs ("\n**Parameters**\n\n", f_doc);
@@ -64,9 +67,12 @@ export_md_function (struct doc_object *self, FILE *f_doc)
 	}
 	
 	// Returns
-	fputs ("\n**Returns**\n", f_doc);
-	fputs (self->returns, f_doc);
-	fputs ("\n\n", f_doc);
+	if (self->returns != NULL)
+	{
+		fputs ("\n**Returns**\n", f_doc);
+		fputs (self->returns, f_doc);
+		fputs ("\n\n", f_doc);
+	}
 }
 
 /**
@@ -83,7 +89,10 @@ static void
 export_md_struct (struct doc_object *self, FILE *f_doc)
 {	
 	// Description
-	fputs (self->description, f_doc);
+	if (self->description != NULL)
+	{
+		fputs (self->description, f_doc);
+	}
 	
 	// Members
 	fputs ("\n**Members**\n\n", f_doc);

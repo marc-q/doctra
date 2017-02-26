@@ -1,5 +1,3 @@
-
-
 string_match_start
 ==================
 Checks if the string @str starts with
@@ -45,6 +43,23 @@ src | String to append.
 **Returns**
 Location of @dest.
 
+string_cut_end
+==============
+Builds a new string containing @str
+without the @end string.
+This should be faster than strspan_c.
+The returned string should be freed with free().
+
+**Parameters**
+
+**Name** | **Description**
+-------- | ---------------
+str | String.
+end | End sequence to remove.
+
+**Returns**
+A new allocated string.
+
 strspan_c
 =========
 A simple shortcut.
@@ -76,4 +91,3 @@ end | End sequence.
 
 **Returns**
 A new allocated substring of @str.
-

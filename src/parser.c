@@ -31,7 +31,7 @@ parse_object (struct doc_object *self, const char *cursor)
 	// Return
 	else if (string_match_start (cursor, DOC_PATTERN_RETURN))
 	{	
-		self->returns = strspan_c (&cursor[strlen (DOC_PATTERN_RETURN)], "\n");
+		self->returns = string_cut_end (&cursor[strlen (DOC_PATTERN_RETURN)], "\n");
 	}
 	// Description
 	else
@@ -55,13 +55,14 @@ parse_node (struct doc_node *node, const char *cursor)
 	// Function name
 	if (string_match_end (cursor, DOC_PATTERN_FUNCTION))
 	{
-		node_init (node, DOC_NODE_FUNCTION, strspan_c (cursor, DOC_PATTERN_FUNCTION));
+		node_init (node, DOC_NODE_FUNCTION,
+				string_cut_end (cursor, DOC_PATTERN_FUNCTION));
 	}
 	// Struct name
 	else if (string_match_start (cursor, DOC_PATTERN_STRUCT))
 	{
 		node_init (node, DOC_NODE_STRUCT,
-				strspan_c (&cursor[strlen (DOC_PATTERN_STRUCT)], "\n"));
+				string_cut_end (&cursor[strlen (DOC_PATTERN_STRUCT)], "\n"));
 	}
 }
 

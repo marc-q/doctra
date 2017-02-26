@@ -64,6 +64,35 @@ string_recat (char *dest, const char *src)
 }
 
 /**
+ * string_cut_end()
+ * @str - String.
+ * @end - End sequence to remove.
+ *
+ * Builds a new string containing @str
+ * without the @end string.
+ *
+ * This should be faster than strspan_c.
+ *
+ * The returned string should be freed with free().
+ *
+ * Return: A new allocated string.
+ */
+char*
+string_cut_end (const char *str, const char *end)
+{
+	const size_t end_len = strlen (end);
+	const size_t str_len = strlen (str);
+	
+	// Error
+	if (end_len >= str_len)
+	{
+		return NULL;
+	}
+	
+	return strndup (str, str_len - end_len);
+}
+
+/**
  * strspan_c()
  * @str - String.
  * @end - End sequence.

@@ -1,5 +1,4 @@
-doc_config
-==========
+#doc_config
 Holds the configuration.
 
 **Members**
@@ -9,8 +8,7 @@ Holds the configuration.
 pattern | Customizable patterns.
 
 
-config_init
-===========
+#config_init
 Initialize a config structure.
 
 **Parameters**
@@ -22,8 +20,7 @@ self | Pointer to the structure to init.
 **Returns**
 none
 
-config_free
-===========
+#config_free
 Free's the allocated memory of a config
 structure.
 
@@ -35,4 +32,3 @@ self | Pointer to the structure to free.
 
 **Returns**
 none
-

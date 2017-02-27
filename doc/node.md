@@ -1,5 +1,4 @@
-doc_node
-========
+#doc_node
 A linked list of objects.
 
 **Members**
@@ -12,8 +11,7 @@ name | Name of the node;
 next | Address of the next entry.
 
 
-node_init
-=========
+#node_init
 Initializes a node structure and its element.
 
 **Parameters**
@@ -27,8 +25,7 @@ name | Name of the node.
 **Returns**
 none
 
-node_append
-===========
+#node_append
 Appends an entry to the linked list.
 
 **Parameters**
@@ -42,8 +39,7 @@ element | The element.
 **Returns**
 Pointer to the list head.
 
-node_free
-=========
+#node_free
 Frees the whole linked list.
 
 **Parameters**
@@ -54,4 +50,3 @@ list | List head.
 
 **Returns**
 none
-

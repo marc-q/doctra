@@ -1,7 +1,4 @@
-
-
-strlist_insert
-==============
+#strlist_insert
 Inserts an entry into a string list.
 
 **Parameters**
@@ -15,8 +12,7 @@ len | Amount of entries in the string list (including this one).
 **Returns**
 The new address of @strlist.
 
-strlist_free
-============
+#strlist_free
 Frees a string list if it has entries.
 
 **Parameters**
@@ -29,4 +25,3 @@ len | Amount of entries in the string list.
 
 **Returns**
 none
-

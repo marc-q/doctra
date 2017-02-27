@@ -1,5 +1,4 @@
-doc_object
-==========
+#doc_object
 Stores the documentation informations.
 
 **Members**
@@ -12,8 +11,7 @@ returns | Description of what the object returns.
 members | String list storing the members.
 
 
-object_init
-===========
+#object_init
 Initialize's a doc_object structure.
 
 **Parameters**
@@ -25,8 +23,7 @@ self | The structure itself.
 **Returns**
 none
 
-object_free
-===========
+#object_free
 Free's the allocated memory of a doc_object structure.
 
 **Parameters**
@@ -38,8 +35,7 @@ self | The structure itself.
 **Returns**
 none
 
-object_member_insert
-====================
+#object_member_insert
 Insert a new member to the doc_object.
 
 **Parameters**
@@ -52,4 +48,3 @@ description | Description of the member.
 
 **Returns**
 none
-

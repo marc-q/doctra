@@ -8,33 +8,6 @@
 #include "export_md.h"
 
 /**
- * export_md_underline()
- * @str - String to output with an underline.
- * @fill - String to output as underline.
- * @f_doc - Stream to which the output gets written.
- *
- * Writes @str with a underline made of @fill
- * to the @f_doc stream.
- *
- * Return: none
- */
-static void
-export_md_underline (const char *str, const char *fill, FILE *f_doc)
-{
-	// Output the string
-	fputs (str, f_doc);
-	fputs ("\n", f_doc);
-	
-	const size_t str_len = strlen (str);
-	// Output the underline
-	for (size_t i = 0; i < str_len; i++)
-	{
-		fputs (fill, f_doc);
-	}
-	fputs ("\n", f_doc);
-}
-
-/**
  * export_md_function()
  * @self - The function data.
  * @f_doc - Stream to which the data gets written.
@@ -129,8 +102,10 @@ export_md (struct doc_node *nodes, const char *filename)
 	struct doc_node *next = nodes;
 	while (next)
 	{
-		// The name of the object with an underline
-		export_md_underline (next->name, "=", f_doc);
+		// The name of the object as H1
+		fputc ('#', f_doc);
+		fputs (next->name, f_doc);
+		fputc ('\n', f_doc);
 		
 		switch (next->type)
 		{

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-doctrabin="doctra"
+doctrabin="./doctra"
 docs="docs"
 # Build the header documentation first
 # because they are placed on top of the

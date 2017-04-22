@@ -103,7 +103,7 @@ export_md (struct doc_node *nodes, const char *filename)
 	while (next)
 	{
 		// The name of the object as H1
-		fputc ('#', f_doc);
+		fputs ("# ", f_doc);
 		fputs (next->name, f_doc);
 		fputc ('\n', f_doc);
 		

@@ -1,4 +1,4 @@
-#parse_object
+# parse_object
 Parses fields of a doc_object.
 
 **Parameters**
@@ -11,7 +11,7 @@ cursor | String to parse.
 **Returns**
 none
 
-#parse_node
+# parse_node
 Parses a node type and initialize it.
 
 **Parameters**
@@ -24,7 +24,7 @@ cursor | String to parse.
 **Returns**
 none
 
-#parse_file
+# parse_file
 Parses a source file and returns a doc_node linked list
 which contains the information gathered from the source file.
 

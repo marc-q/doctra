@@ -1,4 +1,4 @@
-#export_md_function
+# export_md_function
 Exports a function object to the file @f_doc
 in Markdown.
 
@@ -12,7 +12,7 @@ f_doc | Stream to which the data gets written.
 **Returns**
 none
 
-#export_md_struct
+# export_md_struct
 Exports a struct object to the file @f_doc
 in Markdown.
 
@@ -26,7 +26,7 @@ f_doc | Stream to which the data gets written.
 **Returns**
 none
 
-#export_md
+# export_md
 Exports the @nodes in Markdown to a file named @filename.
 
 **Parameters**

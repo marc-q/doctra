@@ -1,13 +1,13 @@
-#Contributing to Doctra
+# Contributing to Doctra
 
 :+1: First off, thanks for taking the time to contribute! :+1:
 
-##How To Submit A (Good) Feature Request?
+## How To Submit A (Good) Feature Request?
 
 1. Check if your request matches one of the templates underneath. If so, copy the template and fill in the blanks.
 2. Make sure to add the **Feature** tag to the issue.
 
-###Templates
+### Templates
 New Object:
 ```
 It would be nice to have the ability to document OBJECTNAME.
@@ -27,7 +27,7 @@ TODO:
 - [ ] Implement and document the exporter.
 - [ ] Make sure all objects are supported.
 ```
-##Issue and Pull Request Labels
+## Issue and Pull Request Labels
 
 Label Name | Description
 ---------- | -----------

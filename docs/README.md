@@ -2,7 +2,7 @@
 This folder contains the documentation of Doctras source code, created with Doctra itself.
 
 ## Building the documentation
-To build the documentation run the `makedoc.sh` script while inside the `doc` folder.
+To build the documentation run the `makedoc.sh` script while inside the `base` folder.
 ```SH
 $ ./makedoc.sh
 ```
